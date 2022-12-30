@@ -1,12 +1,29 @@
 import { DefaultTheme } from "styled-components";
 
-const theme: DefaultTheme = {
+const commonPropsTheme = {
   borderRadius: "5px",
+};
 
+const specificPropsDarkTheme = {
   colors: {
-    main: "cyan",
-    secondary: "magenta",
+    main: "white",
+    secondary: "black",
   },
 };
 
-export { theme };
+const specificPropsLightTheme = {
+  colors: {
+    main: "black",
+    secondary: "white",
+  },
+};
+
+export const darkTheme: DefaultTheme = {
+  ...commonPropsTheme,
+  ...specificPropsDarkTheme,
+};
+
+export const lightTheme: DefaultTheme = {
+  ...commonPropsTheme,
+  ...specificPropsLightTheme,
+};
