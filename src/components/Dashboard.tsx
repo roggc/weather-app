@@ -16,7 +16,7 @@ const Dashboard = () => {
       `http://${API_URL}/timemachine?lat=60.99&lon=30.9&dt=${Math.round(
         decrementDateByNumOfDays(new Date(), daysBeforeToday).getTime() /
           NUM_OF_MS_IN_ONE_S
-      )}&only_current={true}`
+      )}`
     )
       .then((resp) => resp.json())
       .then((data) => console.log(data));
