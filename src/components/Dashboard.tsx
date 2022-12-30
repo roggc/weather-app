@@ -10,14 +10,13 @@ const Dashboard = () => {
       .then((resp) => resp.json())
       .then((data) => console.log(data));
 
-    const daysBeforeToday = 1;
+    const daysBeforeToday = 5;
+    const timeStamp = Math.round(
+      decrementDateByNumOfDays(new Date(), daysBeforeToday).getTime() /
+        NUM_OF_MS_IN_ONE_S
+    );
 
-    fetch(
-      `http://${API_URL}/timemachine?lat=60.99&lon=30.9&dt=${Math.round(
-        decrementDateByNumOfDays(new Date(), daysBeforeToday).getTime() /
-          NUM_OF_MS_IN_ONE_S
-      )}`
-    )
+    fetch(`http://${API_URL}/timemachine?lat=60.99&lon=30.9&dt=${timeStamp}`)
       .then((resp) => resp.json())
       .then((data) => console.log(data));
   }, []);
