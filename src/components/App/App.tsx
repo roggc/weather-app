@@ -1,28 +1,10 @@
-import {
-  createRouteConfig,
-  createReactRouter,
-  RouterProvider,
-} from "@tanstack/react-router";
-import Layout from "../Layout";
-import Home from "../Home";
-import Dashboard from "../Dashboard";
+import { RouterProvider } from "@tanstack/react-router";
+import { ThemeProvider } from "styled-components";
+import { router, theme } from "../../other";
 
-const rootRoute = createRouteConfig({
-  component: Layout,
-});
-const homeRoute = rootRoute.createRoute({ path: "/", component: Home });
-const dashboardRoute = rootRoute.createRoute({
-  path: "/dashboard",
-  component: Dashboard,
-});
-const routeConfig = rootRoute.addChildren([homeRoute, dashboardRoute]);
-const router = createReactRouter({ routeConfig });
-
-declare module "@tanstack/react-router" {
-  interface RegisterRouter {
-    router: typeof router;
-  }
-}
-
-const App = () => <RouterProvider router={router} />;
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <RouterProvider router={router} />
+  </ThemeProvider>
+);
 export default App;
