@@ -20,9 +20,9 @@ const Layout = () => {
           Dashboard
         </Link>
       </LateralMenu>
-      <StyledOutlet>
+      <OutletContainer>
         <Outlet />
-      </StyledOutlet>
+      </OutletContainer>
     </Container>
   );
 };
@@ -41,7 +41,7 @@ const LateralMenu = styled.div`
   border-right: 1px solid ${({ theme }) => theme.colors.main};
 `;
 
-const StyledOutlet = styled.div`
+const OutletContainer = styled.div`
   flex-grow: 1;
 `;
 
