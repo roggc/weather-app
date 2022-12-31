@@ -69,11 +69,13 @@ const Layout = () => {
           )}
         </HeaderLeft>
         <HeaderRight>
-          <button onClick={toggle}>switch theme</button>
+          <HeaderRightButton onClick={toggle}>switch theme</HeaderRightButton>
           {!!userLoggedIn ? (
-            <button onClick={onLogOut}>logout</button>
+            <HeaderRightButton onClick={onLogOut}>logout</HeaderRightButton>
           ) : (
-            <button onClick={onSigninWithGoogle}>sign in w/ google</button>
+            <HeaderRightButton onClick={onSigninWithGoogle}>
+              sign in w/ google
+            </HeaderRightButton>
           )}
         </HeaderRight>
       </Header>
@@ -143,5 +145,9 @@ const LateralMenuComp = ({ children }: PropsWithChildren) => {
   });
   return isNotMobileOrTablet ? <>{children}</> : null;
 };
+
+const HeaderRightButton = styled.button`
+  margin-left: 10px;
+`;
 
 export default Layout;
