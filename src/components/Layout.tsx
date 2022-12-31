@@ -115,11 +115,11 @@ const Container = styled.div`
 `;
 
 const LateralMenu = styled.div`
-  width: 180px;
+  width: 300px;
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${({ theme }) => theme.colors.main};
-  @media (max-width: 760px) {
+  @media (max-width: 996px) {
     width: 0px;
     border-right-width: 0px;
   }
