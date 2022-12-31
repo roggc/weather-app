@@ -1,18 +1,41 @@
 import { Link, Outlet } from "@tanstack/react-router";
 import styled from "styled-components";
-import { useValues, useActions, theme } from "slices";
+import { useValues, useActions, theme, firebase, user } from "slices";
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 const Layout = () => {
   const {
     [theme]: { theme: themeValue },
   } = useValues(theme);
+  const { [firebase]: firebaseApp } = useValues(firebase);
+  const { [user]: userLoggedIn } = useValues(user);
   const {
     [theme]: { toggle },
+    [user]: { set },
   } = useActions();
+
+  const onSigninWithGoogle = () => {
+    if (!firebaseApp) return;
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    signInWithPopup(auth, provider)
+      .then(({ user }) => set(user))
+      .catch(({ message }) => console.error(message));
+  };
+
+  const onLogOut = () => {
+    set(null);
+  };
+
   return (
     <Container>
       <LateralMenu>
         <button onClick={toggle}>switch theme</button>
+        {userLoggedIn ? (
+          <button onClick={onLogOut}>logout</button>
+        ) : (
+          <button onClick={onSigninWithGoogle}>sign in w/ google</button>
+        )}
         <Link to="/" style={{ color: themeValue.colors.main }}>
           Home
         </Link>
