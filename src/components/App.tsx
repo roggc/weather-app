@@ -94,7 +94,6 @@ const App = () => {
       !userData &&
       accessToken
     ) {
-      console.log("setting user through google api");
       setUser(googleAPIState.data);
     }
   }, [
