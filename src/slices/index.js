@@ -15,17 +15,23 @@ import {
   useValues as useUserValues,
   useActions as useUserActions,
 } from "slices/user";
+import {
+  useValues as useGoogleAccessTokenValues,
+  useActions as useGoogleAccessTokenActions,
+} from "slices/googleAccessToken";
 
 export { name as theme } from "slices/theme";
 export { name as data } from "slices/data";
 export { name as firebase } from "slices/firebase";
 export { name as user } from "slices/user";
+export { name as googleAccessToken } from "slices/googleAccessToken";
 
 export const useValues = (name) => ({
   ...useThemeValues(name),
   ...useDataValues(name),
   ...useFirebaseValues(name),
   ...useUserValues(name),
+  ...useGoogleAccessTokenValues(name),
 });
 
 export const useActions = () => ({
@@ -33,6 +39,7 @@ export const useActions = () => ({
   ...useDataActions(),
   ...useFirebaseActions(),
   ...useUserActions(),
+  ...useGoogleAccessTokenActions(),
 });
 
 export default composeProviders();

@@ -1,12 +1,22 @@
 import { Link, Outlet } from "@tanstack/react-router";
 import styled from "styled-components";
-import { useValues, useActions, theme, firebase, user } from "slices";
+import {
+  useValues,
+  useActions,
+  theme,
+  firebase,
+  user,
+  googleAccessToken,
+} from "slices";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 const Layout = () => {
   const {
     [theme]: { theme: themeValue },
   } = useValues(theme);
+  const {
+    [googleAccessToken]: { setter },
+  } = useValues(googleAccessToken);
   const { [firebase]: firebaseApp } = useValues(firebase);
   const { [user]: userLoggedIn } = useValues(user);
   const {
@@ -19,12 +29,20 @@ const Layout = () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
     signInWithPopup(auth, provider)
-      .then(({ user }) => set(user))
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+
+        setter(token);
+        set(result.user);
+      })
       .catch(({ message }) => console.error(message));
   };
 
   const onLogOut = () => {
     set(null);
+    setter(null);
   };
 
   return (
