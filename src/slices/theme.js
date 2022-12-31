@@ -1,5 +1,5 @@
 import { createSlice } from "react-context-slices";
-import { lightTheme, darkTheme } from "../other";
+import { lightTheme, darkTheme } from "other";
 
 export const name = "theme";
 const initialState = { [name]: { theme: lightTheme, isLight: true } };

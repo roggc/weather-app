@@ -1,4 +1,4 @@
-import { router } from "./other";
+import { router } from "other";
 
 declare module "@tanstack/react-router" {
   interface RegisterRouter {

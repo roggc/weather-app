@@ -1,7 +1,7 @@
 import { createRouteConfig, createReactRouter } from "@tanstack/react-router";
-import Layout from "../components/Layout";
-import Home from "../components/Home";
-import Dashboard from "../components/Dashboard";
+import Layout from "components/Layout";
+import Home from "components/Home";
+import Dashboard from "components/Dashboard";
 
 const rootRoute = createRouteConfig({
   component: Layout,

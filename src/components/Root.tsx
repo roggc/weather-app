@@ -1,5 +1,5 @@
-import AppProvider from "../slices";
-import App from "./App/App";
+import AppProvider from "slices";
+import App from "components/App/App";
 
 const Root = () => (
   <AppProvider>

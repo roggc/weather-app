@@ -1,6 +1,6 @@
 import { Link, Outlet } from "@tanstack/react-router";
 import styled from "styled-components";
-import { useValues, useActions, theme } from "../slices";
+import { useValues, useActions, theme } from "slices";
 
 const Layout = () => {
   const {
