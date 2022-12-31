@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { RouterProvider } from "@tanstack/react-router";
 import { ThemeProvider } from "styled-components";
-import { router } from "other";
 import {
   useValues,
   useActions,
@@ -22,6 +21,7 @@ import {
 } from "constants_";
 import { decrementDateByNumOfDays } from "utils";
 import { initializeApp } from "firebase/app";
+import { getRouter } from "other";
 
 const App = () => {
   const [accessToken, setAccessToken] = useLocalStorage<string | null>(
@@ -63,6 +63,8 @@ const App = () => {
     [googleAccessToken]: { setSetterOnlyOnce },
     [user]: { set: setUser },
   } = useActions();
+
+  const [router, setRouter] = useState(getRouter(!!userData));
 
   useEffect(() => {
     set(CURRENT, currentState);
@@ -118,6 +120,10 @@ const App = () => {
     setUser,
     accessToken,
   ]);
+
+  useEffect(() => {
+    setRouter(getRouter(!!userData));
+  }, [userData]);
 
   return (
     <ThemeProvider theme={themeValue}>

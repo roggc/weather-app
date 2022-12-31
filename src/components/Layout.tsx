@@ -57,9 +57,11 @@ const Layout = () => {
         <Link to="/" style={{ color: themeValue.colors.main }}>
           Home
         </Link>
-        <Link to="/dashboard" style={{ color: themeValue.colors.main }}>
-          Dashboard
-        </Link>
+        {userLoggedIn && (
+          <Link to="/dashboard" style={{ color: themeValue.colors.main }}>
+            Dashboard
+          </Link>
+        )}
       </LateralMenu>
       <OutletContainer>
         <Outlet />
