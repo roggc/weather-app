@@ -28,42 +28,54 @@ const App = () => {
     "googleAccessToken",
     null
   );
+
   const daysBeforeToday = 5;
   const timeStamp = Math.round(
     decrementDateByNumOfDays(new Date(), daysBeforeToday).getTime() /
       NUM_OF_MS_IN_ONE_S
   );
+
   const currentPath = "/current?lat=33.44&lon=-94.04&exclude=hourly,daily";
   const historyPath = `/timemachine?lat=60.99&lon=30.9&dt=${timeStamp}`;
   const firebasePath = "/firebase-config";
   const googleAPIPath = `/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`;
+
   const currentState = useFetch(API_URL, currentPath, true, "http://");
   const historyState = useFetch(API_URL, historyPath, true, "http://");
   const firebaseState = useFetch(API_URL, firebasePath, true, "http://");
   const googleAPIState = useFetch(GOOGLE_API, googleAPIPath, !!accessToken);
+
   const {
     [theme]: { theme: themeValue },
   } = useValues(theme);
+
   const { [firebase]: firebaseApp } = useValues(firebase);
+
   const { [user]: userData } = useValues(user);
+
   const {
     [googleAccessToken]: { setter },
   } = useValues(googleAccessToken);
+
   const {
     [data]: { set },
     [firebase]: { setOnce },
     [googleAccessToken]: { setSetterOnlyOnce },
     [user]: { set: setUser },
   } = useActions();
+
   useEffect(() => {
     set(CURRENT, currentState);
   }, [currentState, set]);
+
   useEffect(() => {
     set(HISTORY, historyState);
   }, [historyState, set]);
+
   useEffect(() => {
     set(FIREBASE, firebaseState);
   }, [firebaseState, set]);
+
   useEffect(() => {
     if (
       !firebaseState.isLoading &&
@@ -81,11 +93,13 @@ const App = () => {
     setOnce,
     firebaseApp,
   ]);
+
   useEffect(() => {
     if (setAccessToken && !setter) {
       setSetterOnlyOnce(setAccessToken);
     }
   }, [setAccessToken, setSetterOnlyOnce, setter]);
+
   useEffect(() => {
     if (
       googleAPIState.data &&
@@ -104,6 +118,7 @@ const App = () => {
     setUser,
     accessToken,
   ]);
+
   return (
     <ThemeProvider theme={themeValue}>
       <RouterProvider router={router} />
