@@ -14,11 +14,15 @@ const Layout = () => {
   const {
     [theme]: { theme: themeValue },
   } = useValues(theme);
+
   const {
     [googleAccessToken]: { setter },
   } = useValues(googleAccessToken);
+
   const { [firebase]: firebaseApp } = useValues(firebase);
+
   const { [user]: userLoggedIn } = useValues(user);
+
   const {
     [theme]: { toggle },
     [user]: { set },
@@ -30,7 +34,6 @@ const Layout = () => {
     const auth = getAuth();
     signInWithPopup(auth, provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access Google APIs.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
 
@@ -46,35 +49,65 @@ const Layout = () => {
   };
 
   return (
-    <Container>
-      <LateralMenu>
-        <button onClick={toggle}>switch theme</button>
-        {userLoggedIn ? (
-          <button onClick={onLogOut}>logout</button>
-        ) : (
-          <button onClick={onSigninWithGoogle}>sign in w/ google</button>
-        )}
-        <Link to="/" style={{ color: themeValue.colors.main }}>
-          Home
-        </Link>
-        {userLoggedIn && (
-          <Link to="/dashboard" style={{ color: themeValue.colors.main }}>
-            Dashboard
+    <Page>
+      <Header>
+        <HeaderLeft>
+          <Link to="/" style={{ color: themeValue.colors.main }}>
+            Home
           </Link>
-        )}
-      </LateralMenu>
-      <OutletContainer>
-        <Outlet />
-      </OutletContainer>
-    </Container>
+          {!!userLoggedIn && (
+            <Link to="/dashboard" style={{ color: themeValue.colors.main }}>
+              Dashboard
+            </Link>
+          )}
+        </HeaderLeft>
+        <HeaderRight>
+          <button onClick={toggle}>switch theme</button>
+          {!!userLoggedIn ? (
+            <button onClick={onLogOut}>logout</button>
+          ) : (
+            <button onClick={onSigninWithGoogle}>sign in w/ google</button>
+          )}
+        </HeaderRight>
+      </Header>
+      <Container>
+        <LateralMenu></LateralMenu>
+        <OutletContainer>
+          <Outlet />
+        </OutletContainer>
+      </Container>
+    </Page>
   );
 };
 
-const Container = styled.div`
+const HeaderLeft = styled.div`
   display: flex;
+`;
+
+const HeaderRight = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const Header = styled.div`
+  height: 3.75rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.main};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   color: ${({ theme }) => theme.colors.main};
   background-color: ${({ theme }) => theme.colors.secondary};
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-grow: 1;
 `;
 
 const LateralMenu = styled.div`
