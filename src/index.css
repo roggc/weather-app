@@ -1,3 +1,7 @@
+:root {
+  --main-padding-container: 10px;
+}
+
 html,
 body {
   margin: 0;

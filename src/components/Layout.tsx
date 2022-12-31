@@ -99,6 +99,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: var(--main-padding-container);
 `;
 
 const Page = styled.div`
@@ -115,6 +116,7 @@ const Container = styled.div`
 `;
 
 const LateralMenu = styled.div`
+  padding: var(--main-padding-container);
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -127,6 +129,7 @@ const LateralMenu = styled.div`
 
 const OutletContainer = styled.div`
   flex-grow: 1;
+  padding: var(--main-padding-container);
 `;
 
 const LinkContainer = styled.div`
