@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { Link, Outlet } from "@tanstack/react-router";
 import styled from "styled-components";
 import {
@@ -9,6 +10,8 @@ import {
   googleAccessToken,
 } from "slices";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { useMediaQuery } from "react-responsive";
+import { RESPONSIVE_BREAKPOINT } from "constants_";
 
 const Layout = () => {
   const {
@@ -75,7 +78,9 @@ const Layout = () => {
         </HeaderRight>
       </Header>
       <Container>
-        <LateralMenu></LateralMenu>
+        <LateralMenuComp>
+          <LateralMenu></LateralMenu>
+        </LateralMenuComp>
         <OutletContainer>
           <Outlet />
         </OutletContainer>
@@ -121,10 +126,6 @@ const LateralMenu = styled.div`
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${({ theme }) => theme.colors.main};
-  @media (max-width: 996px) {
-    width: 0px;
-    border-right-width: 0px;
-  }
 `;
 
 const OutletContainer = styled.div`
@@ -135,5 +136,12 @@ const OutletContainer = styled.div`
 const LinkContainer = styled.div`
   margin-right: 10px;
 `;
+
+const LateralMenuComp = ({ children }: PropsWithChildren) => {
+  const isNotMobileOrTablet = useMediaQuery({
+    minWidth: RESPONSIVE_BREAKPOINT,
+  });
+  return isNotMobileOrTablet ? <>{children}</> : null;
+};
 
 export default Layout;

@@ -1,0 +1,1 @@
+export const RESPONSIVE_BREAKPOINT = 996;
