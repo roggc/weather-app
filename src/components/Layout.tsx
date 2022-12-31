@@ -52,13 +52,17 @@ const Layout = () => {
     <Page>
       <Header>
         <HeaderLeft>
-          <Link to="/" style={{ color: themeValue.colors.main }}>
-            Home
-          </Link>
-          {!!userLoggedIn && (
-            <Link to="/dashboard" style={{ color: themeValue.colors.main }}>
-              Dashboard
+          <LinkContainer>
+            <Link to="/" style={{ color: themeValue.colors.main }}>
+              Home
             </Link>
+          </LinkContainer>
+          {!!userLoggedIn && (
+            <LinkContainer>
+              <Link to="/dashboard" style={{ color: themeValue.colors.main }}>
+                Dashboard
+              </Link>
+            </LinkContainer>
           )}
         </HeaderLeft>
         <HeaderRight>
@@ -115,10 +119,18 @@ const LateralMenu = styled.div`
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${({ theme }) => theme.colors.main};
+  @media (max-width: 760px) {
+    width: 0px;
+    border-right-width: 0px;
+  }
 `;
 
 const OutletContainer = styled.div`
   flex-grow: 1;
+`;
+
+const LinkContainer = styled.div`
+  margin-right: 10px;
 `;
 
 export default Layout;
