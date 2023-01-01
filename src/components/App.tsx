@@ -12,7 +12,7 @@ import {
 } from "slices";
 import { useFetch, useLocalStorage } from "hooks";
 import {
-  API_URL,
+  MY_API_URL,
   GOOGLE_API,
   HISTORY1,
   HISTORY2,
@@ -20,6 +20,8 @@ import {
   HISTORY4,
   HISTORY5,
   FIREBASE,
+  HERE,
+  FIRST_ITEM,
 } from "constants_";
 import { initializeApp } from "firebase/app";
 import { getRouter } from "other";
@@ -31,42 +33,70 @@ const App = () => {
     null
   );
 
-  const historyState1 = useFetch(
-    API_URL,
-    getHistoryPath(33.44, -94.04, 1),
-    true,
-    "http://"
-  );
-  const historyState2 = useFetch(
-    API_URL,
-    getHistoryPath(33.44, -94.04, 2),
-    true,
-    "http://"
-  );
-  const historyState3 = useFetch(
-    API_URL,
-    getHistoryPath(33.44, -94.04, 3),
-    true,
-    "http://"
-  );
-  const historyState4 = useFetch(
-    API_URL,
-    getHistoryPath(33.44, -94.04, 4),
-    true,
-    "http://"
-  );
-  const historyState5 = useFetch(
-    API_URL,
-    getHistoryPath(33.44, -94.04, 5),
-    true,
-    "http://"
-  );
+  const [historyPath1, setHistoryPath1] = useState("");
+  const [historyPath2, setHistoryPath2] = useState("");
+  const [historyPath3, setHistoryPath3] = useState("");
+  const [historyPath4, setHistoryPath4] = useState("");
+  const [historyPath5, setHistoryPath5] = useState("");
+  const [isHereReady, setIsHereReady] = useState(false);
 
   const firebasePath = "/firebase-config";
   const googleAPIPath = `/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`;
+  const herePath = "/here-coordinates?q=Berlin";
 
-  const firebaseState = useFetch(API_URL, firebasePath, true, "http://");
+  const firebaseState = useFetch(MY_API_URL, firebasePath, true, "http://");
   const googleAPIState = useFetch(GOOGLE_API, googleAPIPath, !!accessToken);
+  const hereState = useFetch(MY_API_URL, herePath, true, "http://");
+
+  useEffect(() => {
+    const isHereReady_ =
+      !hereState.isLoading && !hereState.error && !!hereState.data;
+    setIsHereReady(isHereReady_);
+    if (isHereReady_) {
+      // @ts-ignore
+      const { lat, lng } = hereState.data?.items[FIRST_ITEM].position;
+      setHistoryPath1(getHistoryPath(lat, lng, 1));
+      setHistoryPath2(getHistoryPath(lat, lng, 2));
+      setHistoryPath3(getHistoryPath(lat, lng, 3));
+      setHistoryPath4(getHistoryPath(lat, lng, 4));
+      setHistoryPath5(getHistoryPath(lat, lng, 5));
+    }
+  }, [hereState.isLoading, hereState.error, hereState.data]);
+
+  const historyState1 = useFetch(
+    MY_API_URL,
+    historyPath1,
+    isHereReady,
+    "http://"
+  );
+
+  const historyState2 = useFetch(
+    MY_API_URL,
+    historyPath2,
+    isHereReady,
+    "http://"
+  );
+
+  const historyState3 = useFetch(
+    MY_API_URL,
+    historyPath3,
+    isHereReady,
+    "http://"
+  );
+
+  const historyState4 = useFetch(
+    MY_API_URL,
+    historyPath4,
+    isHereReady,
+    "http://"
+  );
+
+  const historyState5 = useFetch(
+    MY_API_URL,
+    historyPath5,
+    isHereReady,
+    "http://"
+  );
 
   const { theme: themeValue } = useValues(theme);
 
@@ -108,6 +138,10 @@ const App = () => {
   useEffect(() => {
     set(FIREBASE, firebaseState);
   }, [firebaseState, set]);
+
+  useEffect(() => {
+    set(HERE, hereState);
+  }, [hereState, set]);
 
   useEffect(() => {
     if (

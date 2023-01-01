@@ -7,7 +7,7 @@ export const useFetch = (
   protocol = "https://"
 ) => {
   const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(condition);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export const useFetch = (
         .finally(() => setIsLoading(false));
     } else {
       setData(undefined);
-      setIsLoading(condition);
+      setIsLoading(true);
       setError(undefined);
     }
   }, [apiUrl, path, condition, protocol]);
