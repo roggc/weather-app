@@ -9,6 +9,7 @@ import {
   firebase,
   googleAccessToken,
   user,
+  city,
 } from "slices";
 import { useFetch, useLocalStorage } from "hooks";
 import {
@@ -33,16 +34,19 @@ const App = () => {
     null
   );
 
+  const { name: cityName } = useValues(city);
+
   const [historyPath1, setHistoryPath1] = useState("");
   const [historyPath2, setHistoryPath2] = useState("");
   const [historyPath3, setHistoryPath3] = useState("");
   const [historyPath4, setHistoryPath4] = useState("");
   const [historyPath5, setHistoryPath5] = useState("");
+
   const [isHereReady, setIsHereReady] = useState(false);
 
   const firebasePath = "/firebase-config";
   const googleAPIPath = `/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`;
-  const herePath = "/here-coordinates?q=Berlin";
+  const herePath = `/here-coordinates?q=${cityName}`;
 
   const firebaseState = useFetch(MY_API_URL, firebasePath, true, "http://");
   const googleAPIState = useFetch(GOOGLE_API, googleAPIPath, !!accessToken);
@@ -51,17 +55,26 @@ const App = () => {
   useEffect(() => {
     const isHereReady_ =
       !hereState.isLoading && !hereState.error && !!hereState.data;
-    setIsHereReady(isHereReady_);
-    if (isHereReady_) {
+    setIsHereReady(
+      isHereReady_ &&
+        !!cityName && // @ts-ignore
+        !!hereState.data?.items?.[FIRST_ITEM]?.position
+    );
+
+    if (
+      isHereReady_ &&
+      !!cityName && // @ts-ignore
+      !!hereState.data?.items?.[FIRST_ITEM]?.position
+    ) {
       // @ts-ignore
-      const { lat, lng } = hereState.data?.items[FIRST_ITEM].position;
+      const { lat, lng } = hereState.data?.items?.[FIRST_ITEM].position;
       setHistoryPath1(getHistoryPath(lat, lng, 1));
       setHistoryPath2(getHistoryPath(lat, lng, 2));
       setHistoryPath3(getHistoryPath(lat, lng, 3));
       setHistoryPath4(getHistoryPath(lat, lng, 4));
       setHistoryPath5(getHistoryPath(lat, lng, 5));
     }
-  }, [hereState.isLoading, hereState.error, hereState.data]);
+  }, [hereState.isLoading, hereState.error, hereState.data, cityName]);
 
   const historyState1 = useFetch(
     MY_API_URL,
