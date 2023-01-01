@@ -14,17 +14,13 @@ import { useMediaQuery } from "react-responsive";
 import { RESPONSIVE_BREAKPOINT } from "constants_";
 
 const Layout = () => {
-  const {
-    [theme]: { theme: themeValue },
-  } = useValues(theme);
+  const { theme: themeValue } = useValues(theme);
 
-  const {
-    [googleAccessToken]: { setter },
-  } = useValues(googleAccessToken);
+  const { setter } = useValues(googleAccessToken);
 
-  const { [firebase]: firebaseApp } = useValues(firebase);
+  const { app: firebaseApp } = useValues(firebase);
 
-  const { [user]: userLoggedIn } = useValues(user);
+  const { user: userLoggedIn } = useValues(user);
 
   const {
     [theme]: { toggle },

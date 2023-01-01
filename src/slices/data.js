@@ -1,14 +1,12 @@
 import { createSlice } from "react-context-slices";
 
 export const name = "data";
-const initialState = {
-  [name]: {},
-};
+const initialState = {};
 const SET = "SET";
 const reducer = (draft, { type, payload }) => {
   switch (type) {
     case SET:
-      draft[name][payload.apiCallKey] = payload.state;
+      draft[payload.apiCallKey] = payload.state;
       break;
     default:
       break;

@@ -1,13 +1,13 @@
 import { createSlice } from "react-context-slices";
 
 export const name = "googleAccessToken";
-const initialState = { [name]: { value: undefined, setter: undefined } };
+const initialState = { value: undefined, setter: undefined };
 const SET_SETTER_ONLY_ONCE = "SET_SETTER_ONLY_ONCE";
 const reducer = (draft, { type, payload }) => {
   switch (type) {
     case SET_SETTER_ONLY_ONCE:
-      if (!draft[name].setter) {
-        draft[name].setter = payload;
+      if (!draft.setter) {
+        draft.setter = payload;
       }
       break;
     default:

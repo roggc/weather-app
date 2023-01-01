@@ -45,17 +45,13 @@ const App = () => {
   const firebaseState = useFetch(API_URL, firebasePath, true, "http://");
   const googleAPIState = useFetch(GOOGLE_API, googleAPIPath, !!accessToken);
 
-  const {
-    [theme]: { theme: themeValue },
-  } = useValues(theme);
+  const { theme: themeValue } = useValues(theme);
 
-  const { [firebase]: firebaseApp } = useValues(firebase);
+  const { app: firebaseApp } = useValues(firebase);
 
-  const { [user]: userData } = useValues(user);
+  const { user: userData } = useValues(user);
 
-  const {
-    [googleAccessToken]: { setter },
-  } = useValues(googleAccessToken);
+  const { setter } = useValues(googleAccessToken);
 
   const {
     [data]: { set },

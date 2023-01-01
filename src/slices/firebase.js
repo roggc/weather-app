@@ -1,13 +1,13 @@
 import { createSlice } from "react-context-slices";
 
 export const name = "firebase";
-const initialState = { [name]: null };
+const initialState = { app: null };
 const SET_ONCE = "SET_ONCE";
 const reducer = (draft, { type, payload }) => {
   switch (type) {
     case SET_ONCE:
-      if (!draft[name]) {
-        draft[name] = payload;
+      if (!draft.app) {
+        draft.app = payload;
       }
       break;
     default:

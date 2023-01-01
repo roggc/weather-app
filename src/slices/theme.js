@@ -2,15 +2,17 @@ import { createSlice } from "react-context-slices";
 import { lightTheme, darkTheme } from "other";
 
 export const name = "theme";
-const initialState = { [name]: { theme: lightTheme, isLight: true } };
+const initialState = { theme: lightTheme, isLight: true };
 const TOGGLE = "TOGGLE";
 const reducer = (draft, { type }) => {
   switch (type) {
     case TOGGLE:
-      if (draft[name].isLight) {
-        draft[name] = { theme: darkTheme, isLight: false };
+      if (draft.isLight) {
+        draft.theme = darkTheme;
+        draft.isLight = false;
       } else {
-        draft[name] = { theme: lightTheme, isLight: true };
+        draft.theme = lightTheme;
+        draft.isLight = true;
       }
       break;
     default:
