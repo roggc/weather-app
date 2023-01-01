@@ -1,6 +1,7 @@
+import styled from "styled-components";
 import { useValues, data } from "slices";
 import { CURRENT, HISTORY } from "constants_";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Label } from "recharts";
+import BasicLineChart from "components/charts/BasicLineChart";
 
 const Dashboard = () => {
   const {
@@ -20,31 +21,26 @@ const Dashboard = () => {
   return (
     <>
       {isShowHistoryGraph && (
-        <LineChart
-          width={300}
-          height={200}
-          data={historyData.hourly.map((ho: any, index: number) => ({
-            humidity: ho.humidity,
-            hour: index,
-          }))}
-        >
-          <Line dataKey="humidity" type="monotone" />
-          <XAxis dataKey="hour">
-            <Label value="hour" offset={0} position="insideBottom" />
-          </XAxis>
-          <YAxis>
-            <Label
-              value="humidity"
-              offset={0}
-              position="insideLeft"
-              angle={-90}
-            />
-          </YAxis>
-          <Tooltip />
-        </LineChart>
+        <Widget>
+          <BasicLineChart
+            data={historyData.hourly.map((hour: any, index: number) => ({
+              humidity: hour.humidity,
+              hour: index,
+            }))}
+          />
+        </Widget>
       )}
     </>
   );
 };
+
+const Widget = styled.div`
+  border-radius: var(--border-radius);
+  background-color: ${({ theme }) => theme.colors.main};
+  color: ${({ theme }) => theme.colors.secondary};
+  padding: var(--main-padding-container);
+  margin: var(--general-margin);
+  width: fit-content;
+`;
 
 export default Dashboard;

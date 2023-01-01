@@ -1,5 +1,9 @@
 :root {
   --main-padding-container: 10px;
+  --header-height: 3.5rem;
+  --lateral-menu-width: 280px;
+  --border-radius: 5px;
+  --general-margin: 10px;
 }
 
 html,

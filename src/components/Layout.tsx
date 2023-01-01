@@ -97,7 +97,7 @@ const HeaderRight = styled.div`
 `;
 
 const Header = styled.div`
-  height: 3.75rem;
+  height: var(--header-height);
   border-bottom: 1px solid ${({ theme }) => theme.colors.main};
   display: flex;
   justify-content: space-between;
@@ -120,7 +120,7 @@ const Container = styled.div`
 
 const LateralMenu = styled.div`
   padding: var(--main-padding-container);
-  width: 300px;
+  width: var(--lateral-menu-width);
   display: flex;
   flex-direction: column;
   border-right: 1px solid ${({ theme }) => theme.colors.main};
