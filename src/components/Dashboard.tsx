@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { useValues, useActions, data, city } from "slices";
 import {
