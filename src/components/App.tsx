@@ -14,14 +14,16 @@ import { useFetch, useLocalStorage } from "hooks";
 import {
   API_URL,
   GOOGLE_API,
-  NUM_OF_MS_IN_ONE_S,
-  CURRENT,
-  HISTORY,
+  HISTORY1,
+  HISTORY2,
+  HISTORY3,
+  HISTORY4,
+  HISTORY5,
   FIREBASE,
 } from "constants_";
-import { decrementDateByNumOfDays } from "utils";
 import { initializeApp } from "firebase/app";
 import { getRouter } from "other";
+import { getHistoryPath } from "utils";
 
 const App = () => {
   const [accessToken, setAccessToken] = useLocalStorage<string | null>(
@@ -29,19 +31,40 @@ const App = () => {
     null
   );
 
-  const daysBeforeToday = 5;
-  const timeStamp = Math.round(
-    decrementDateByNumOfDays(new Date(), daysBeforeToday).getTime() /
-      NUM_OF_MS_IN_ONE_S
+  const historyState1 = useFetch(
+    API_URL,
+    getHistoryPath(33.44, -94.04, 1),
+    true,
+    "http://"
+  );
+  const historyState2 = useFetch(
+    API_URL,
+    getHistoryPath(33.44, -94.04, 2),
+    true,
+    "http://"
+  );
+  const historyState3 = useFetch(
+    API_URL,
+    getHistoryPath(33.44, -94.04, 3),
+    true,
+    "http://"
+  );
+  const historyState4 = useFetch(
+    API_URL,
+    getHistoryPath(33.44, -94.04, 4),
+    true,
+    "http://"
+  );
+  const historyState5 = useFetch(
+    API_URL,
+    getHistoryPath(33.44, -94.04, 5),
+    true,
+    "http://"
   );
 
-  const currentPath = "/current?lat=33.44&lon=-94.04&exclude=hourly,daily";
-  const historyPath = `/timemachine?lat=60.99&lon=30.9&dt=${timeStamp}`;
   const firebasePath = "/firebase-config";
   const googleAPIPath = `/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`;
 
-  const currentState = useFetch(API_URL, currentPath, true, "http://");
-  const historyState = useFetch(API_URL, historyPath, true, "http://");
   const firebaseState = useFetch(API_URL, firebasePath, true, "http://");
   const googleAPIState = useFetch(GOOGLE_API, googleAPIPath, !!accessToken);
 
@@ -63,12 +86,24 @@ const App = () => {
   const [router, setRouter] = useState(getRouter(!!userData));
 
   useEffect(() => {
-    set(CURRENT, currentState);
-  }, [currentState, set]);
+    set(HISTORY1, historyState1);
+  }, [historyState1, set]);
 
   useEffect(() => {
-    set(HISTORY, historyState);
-  }, [historyState, set]);
+    set(HISTORY2, historyState2);
+  }, [historyState2, set]);
+
+  useEffect(() => {
+    set(HISTORY3, historyState3);
+  }, [historyState3, set]);
+
+  useEffect(() => {
+    set(HISTORY4, historyState4);
+  }, [historyState4, set]);
+
+  useEffect(() => {
+    set(HISTORY5, historyState5);
+  }, [historyState5, set]);
 
   useEffect(() => {
     set(FIREBASE, firebaseState);
