@@ -23,10 +23,11 @@ import {
   FIREBASE,
   HERE,
   FIRST_ITEM,
+  CURRENT,
 } from "constants_";
 import { initializeApp } from "firebase/app";
 import { getRouter } from "other";
-import { getHistoryPath } from "utils";
+import { getHistoryPath, getCurrentPath } from "utils";
 
 const App = () => {
   const [accessToken, setAccessToken] = useLocalStorage<string | null>(
@@ -41,6 +42,7 @@ const App = () => {
   const [historyPath3, setHistoryPath3] = useState("");
   const [historyPath4, setHistoryPath4] = useState("");
   const [historyPath5, setHistoryPath5] = useState("");
+  const [currentPath, setCurrentPath] = useState("");
 
   const [isHereReady, setIsHereReady] = useState(false);
 
@@ -73,6 +75,7 @@ const App = () => {
       setHistoryPath3(getHistoryPath(lat, lng, 3));
       setHistoryPath4(getHistoryPath(lat, lng, 4));
       setHistoryPath5(getHistoryPath(lat, lng, 5));
+      setCurrentPath(getCurrentPath(lat, lng));
     }
   }, [hereState.isLoading, hereState.error, hereState.data, cityName]);
 
@@ -107,6 +110,13 @@ const App = () => {
   const historyState5 = useFetch(
     MY_API_URL,
     historyPath5,
+    isHereReady,
+    "http://"
+  );
+
+  const currentState = useFetch(
+    MY_API_URL,
+    currentPath,
     isHereReady,
     "http://"
   );
@@ -147,6 +157,10 @@ const App = () => {
   useEffect(() => {
     set(HISTORY5, historyState5);
   }, [historyState5, set]);
+
+  useEffect(() => {
+    set(CURRENT, currentState);
+  }, [currentState, set]);
 
   useEffect(() => {
     set(FIREBASE, firebaseState);

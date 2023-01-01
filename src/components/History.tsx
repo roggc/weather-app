@@ -1,20 +1,10 @@
 import styled from "styled-components";
-import { useValues, useActions, data, city } from "slices";
-import {
-  HISTORY1,
-  HISTORY2,
-  HISTORY3,
-  HISTORY4,
-  HISTORY5,
-  HERE,
-} from "constants_";
+import { useValues, data } from "slices";
+import { HISTORY1, HISTORY2, HISTORY3, HISTORY4, HISTORY5 } from "constants_";
 import BasicLineChart from "components/charts/BasicLineChart";
+import DashboardHeader from "components/Dashboard/DashboardHeader";
 
 const Dashboard = () => {
-  const { name: cityName } = useValues(city);
-  const {
-    [city]: { set: setCityName },
-  } = useActions();
   const {
     [HISTORY1]: {
       data: history1Data,
@@ -41,7 +31,6 @@ const Dashboard = () => {
       isLoading: history5IsLoading,
       error: history5Error,
     },
-    [HERE]: { data: hereData, isLoading: hereIsLoading, error: hereError },
   } = useValues(data);
 
   const isShowHistory1Graph =
@@ -65,16 +54,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <Header>
-        <StyledInput
-          type="text"
-          value={cityName}
-          onChange={(e) => setCityName(e.target.value)}
-        />
-        {!hereIsLoading && !hereError && !!hereData && (
-          <div>{hereData?.items?.[0]?.title}</div>
-        )}
-      </Header>
+      <DashboardHeader />
       <WidgetsContainer>
         {array.map(
           (object) =>
@@ -94,11 +74,6 @@ const Dashboard = () => {
   );
 };
 
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const Widget = styled.div`
   border-radius: var(--main-border-radius);
   background-color: ${({ theme }) => theme.colors.main};
@@ -111,13 +86,6 @@ const Widget = styled.div`
 const WidgetsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-`;
-
-const StyledInput = styled.input`
-  height: 40px;
-  width: 400px;
-  border-radius: var(--main-border-radius);
-  margin-right: 30px;
 `;
 
 export default Dashboard;

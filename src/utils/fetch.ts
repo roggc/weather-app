@@ -12,3 +12,6 @@ export const getHistoryPath = (
   );
   return `/timemachine?lat=${lat}&lon=${lon}&dt=${timeStamp}`;
 };
+
+export const getCurrentPath = (lat: number, lon: number) =>
+  `/current?lat=${lat}&lon=${lon}&exclude=hourly,daily`;
