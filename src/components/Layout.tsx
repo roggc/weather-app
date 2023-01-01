@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { PropsWithChildren } from "react";
 import { Link, Outlet } from "@tanstack/react-router";
 import styled from "styled-components";
@@ -13,7 +14,10 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useMediaQuery } from "react-responsive";
 import { RESPONSIVE_BREAKPOINT } from "constants_";
 
+type Route = "dashboard" | "home";
+
 const Layout = () => {
+  const [route, setRoute] = useState<Route>("home");
   const { theme: themeValue } = useValues(theme);
 
   const { setter } = useValues(googleAccessToken);
@@ -47,17 +51,26 @@ const Layout = () => {
     setter(null);
   };
 
+  const dashboardLinks = [
+    <Link to="/history" style={{ color: themeValue.colors.main }} key="history">
+      5 last days
+    </Link>,
+    <Link to="/current" style={{ color: themeValue.colors.main }} key="current">
+      current weather
+    </Link>,
+  ];
+
   return (
     <Page>
       <Header>
         <HeaderLeft>
-          <LinkContainer>
+          <LinkContainer onClick={() => setRoute("home")}>
             <Link to="/" style={{ color: themeValue.colors.main }}>
               Home
             </Link>
           </LinkContainer>
           {!!userLoggedIn && (
-            <LinkContainer>
+            <LinkContainer onClick={() => setRoute("dashboard")}>
               <Link to="/dashboard" style={{ color: themeValue.colors.main }}>
                 Dashboard
               </Link>
@@ -77,7 +90,7 @@ const Layout = () => {
       </Header>
       <Container>
         <LateralMenuComp>
-          <LateralMenu></LateralMenu>
+          <LateralMenu>{route === "dashboard" && dashboardLinks}</LateralMenu>
         </LateralMenuComp>
         <OutletContainer>
           <Outlet />
