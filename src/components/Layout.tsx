@@ -16,13 +16,13 @@ import { RESPONSIVE_BREAKPOINT } from "constants_";
 import { useLocalStorage } from "hooks";
 import { lightTheme, darkTheme } from "other";
 
-type Route = "dashboard" | "home";
+type Route = "dashboard" | "home" | "history";
 type IsLight = {
   isLight: boolean;
 };
 
 const Layout = () => {
-  const [route, setRoute] = useState<Route>("home");
+  const [route, setRoute] = useLocalStorage<Route>("route", "home");
   const { isLight } = useValues(theme);
   const themeValue = isLight ? lightTheme : darkTheme;
   const [_, setIsLightLocalStorage] = useLocalStorage<IsLight>("isLight", {
@@ -65,11 +65,13 @@ const Layout = () => {
   };
 
   const dashboardLinks = [
-    <Link to="/history" style={{ color: themeValue.colors.main }} key="history">
+    <Link
+      to="/history"
+      style={{ color: themeValue.colors.main }}
+      key="history"
+      onClick={() => setRoute("dashboard")}
+    >
       5 last days
-    </Link>,
-    <Link to="/current" style={{ color: themeValue.colors.main }} key="current">
-      current weather
     </Link>,
   ];
 
@@ -103,7 +105,9 @@ const Layout = () => {
       </Header>
       <Container>
         <LateralMenuComp>
-          <LateralMenu>{route === "dashboard" && dashboardLinks}</LateralMenu>
+          <LateralMenu>
+            {(route === "dashboard" || route === "history") && dashboardLinks}
+          </LateralMenu>
         </LateralMenuComp>
         <OutletContainer>
           <Outlet />
