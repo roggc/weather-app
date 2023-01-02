@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PropsWithChildren } from "react";
 import { Link, Outlet } from "@tanstack/react-router";
 import styled from "styled-components";
@@ -13,12 +13,21 @@ import {
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useMediaQuery } from "react-responsive";
 import { RESPONSIVE_BREAKPOINT } from "constants_";
+import { useLocalStorage } from "hooks";
+import { lightTheme, darkTheme } from "other";
 
 type Route = "dashboard" | "home";
+type IsLight = {
+  isLight: boolean;
+};
 
 const Layout = () => {
   const [route, setRoute] = useState<Route>("home");
-  const { theme: themeValue } = useValues(theme);
+  const { isLight } = useValues(theme);
+  const themeValue = isLight ? lightTheme : darkTheme;
+  const [_, setIsLightLocalStorage] = useLocalStorage<IsLight>("isLight", {
+    isLight,
+  });
 
   const { setter } = useValues(googleAccessToken);
 
@@ -30,6 +39,10 @@ const Layout = () => {
     [theme]: { toggle },
     [user]: { set },
   } = useActions();
+
+  useEffect(() => {
+    setIsLightLocalStorage(isLight);
+  }, [isLight, setIsLightLocalStorage]);
 
   const onSigninWithGoogle = () => {
     if (!firebaseApp) return;

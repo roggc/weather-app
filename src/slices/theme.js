@@ -1,19 +1,12 @@
-import { createSlice } from "react-context-slices";
-import { lightTheme, darkTheme } from "other";
+import { createSlice } from "lib/react-context-slices";
 
 export const name = "theme";
-const initialState = { theme: lightTheme, isLight: true };
+const initialState = { isLight: true };
 const TOGGLE = "TOGGLE";
 const reducer = (draft, { type }) => {
   switch (type) {
     case TOGGLE:
-      if (draft.isLight) {
-        draft.theme = darkTheme;
-        draft.isLight = false;
-      } else {
-        draft.theme = lightTheme;
-        draft.isLight = true;
-      }
+      draft.isLight = !draft.isLight;
       break;
     default:
       break;
@@ -27,5 +20,6 @@ export const { useValues, useActions } = createSlice(
     const dispatch = useDispatch();
     const toggle = () => dispatch({ type: TOGGLE });
     return { [name]: { toggle } };
-  }
+  },
+  ["isLight"]
 );

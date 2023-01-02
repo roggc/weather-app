@@ -1,4 +1,4 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "index.css";
 import Root from "components/Root";
@@ -8,9 +8,9 @@ const rootElement = document.getElementById("root");
 if (!rootElement?.innerHTML) {
   const root = ReactDOM.createRoot(rootElement as HTMLElement);
   root.render(
-    <React.StrictMode>
+    <StrictMode>
       <Root />
-    </React.StrictMode>
+    </StrictMode>
   );
 }
 

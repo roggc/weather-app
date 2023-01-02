@@ -1,4 +1,4 @@
-import { composeProviders } from "react-context-slices";
+import { composeProviders } from "lib/react-context-slices";
 import {
   useValues as useThemeValues,
   useActions as useThemeActions,

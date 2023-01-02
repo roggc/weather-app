@@ -1,4 +1,4 @@
-import { createSlice } from "react-context-slices";
+import { createSlice } from "lib/react-context-slices";
 
 export const name = "city";
 const initialState = { name: "" };

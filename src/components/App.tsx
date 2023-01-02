@@ -28,6 +28,7 @@ import {
 import { initializeApp } from "firebase/app";
 import { getRouter } from "other";
 import { getHistoryPath, getCurrentPath } from "utils";
+import { lightTheme, darkTheme } from "other";
 
 const App = () => {
   const [accessToken, setAccessToken] = useLocalStorage<string | null>(
@@ -121,7 +122,7 @@ const App = () => {
     "http://"
   );
 
-  const { theme: themeValue } = useValues(theme);
+  const { isLight } = useValues(theme);
 
   const { app: firebaseApp } = useValues(firebase);
 
@@ -218,7 +219,7 @@ const App = () => {
   }, [userData]);
 
   return (
-    <ThemeProvider theme={themeValue}>
+    <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
       <RouterProvider router={router} />
     </ThemeProvider>
   );
