@@ -5,7 +5,8 @@ import { useValues, useActions, city, data } from "slices";
 import { useDebounce } from "hooks";
 
 const DashboardHeader = () => {
-  const [localCityName, setLocalCityName] = useState("");
+  const { name: cityName } = useValues(city);
+  const [localCityName, setLocalCityName] = useState(cityName);
   const {
     [city]: { set: setCityName },
   } = useActions();

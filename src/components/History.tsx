@@ -1,8 +1,7 @@
-import styled from "styled-components";
 import { useValues, data } from "slices";
 import { HISTORY1, HISTORY2, HISTORY3, HISTORY4, HISTORY5 } from "constants_";
-import BasicLineChart from "components/charts/BasicLineChart";
 import DashboardHeader from "components/Dashboard/DashboardHeader";
+import Widgets from "components/Dashboard/Widgets";
 
 const Dashboard = () => {
   const {
@@ -55,37 +54,9 @@ const Dashboard = () => {
   return (
     <>
       <DashboardHeader />
-      <WidgetsContainer>
-        {array.map(
-          (object) =>
-            object.condition && (
-              <Widget key={object.id}>
-                <BasicLineChart
-                  data={object.data.hourly?.map((hour: any, index: number) => ({
-                    humidity: hour.humidity,
-                    hour: index,
-                  }))}
-                />
-              </Widget>
-            )
-        )}
-      </WidgetsContainer>
+      <Widgets array={array} />
     </>
   );
 };
-
-const Widget = styled.div`
-  border-radius: var(--main-border-radius);
-  background-color: ${({ theme }) => theme.colors.main};
-  color: ${({ theme }) => theme.colors.secondary};
-  padding: var(--main-padding-container);
-  margin: var(--general-margin);
-  width: fit-content;
-`;
-
-const WidgetsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
 
 export default Dashboard;
