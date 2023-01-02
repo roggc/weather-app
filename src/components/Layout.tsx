@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { PropsWithChildren } from "react";
 import { Link, Outlet } from "@tanstack/react-router";
 import styled from "styled-components";
@@ -25,7 +25,7 @@ const Layout = () => {
   const [route, setRoute] = useLocalStorage<Route>("route", "home");
   const { isLight } = useValues(theme);
   const themeValue = isLight ? lightTheme : darkTheme;
-  const [_, setIsLightLocalStorage] = useLocalStorage<IsLight>("isLight", {
+  const [, setIsLightLocalStorage] = useLocalStorage<IsLight>("isLight", {
     isLight,
   });
 
