@@ -33,6 +33,7 @@ const DashboardHeader = () => {
           type="text"
           value={localCityName}
           onChange={(e) => setLocalCityName(e.target.value)}
+          placeholder="City name"
         />
         {!isLoading && !error && !!hereData && (
           <div>{hereData?.items?.[FIRST_ITEM]?.title}</div>
