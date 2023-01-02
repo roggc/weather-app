@@ -23,6 +23,10 @@ import {
   useValues as useCityValues,
   useActions as useCityActions,
 } from "slices/city";
+import {
+  useValues as useDataKeyValues,
+  useActions as useDataKeyActions,
+} from "slices/dataKey";
 
 export { name as theme } from "slices/theme";
 export { name as data } from "slices/data";
@@ -30,6 +34,7 @@ export { name as firebase } from "slices/firebase";
 export { name as user } from "slices/user";
 export { name as googleAccessToken } from "slices/googleAccessToken";
 export { name as city } from "slices/city";
+export { name as dataKey } from "slices/dataKey";
 
 export const useValues = (name) => ({
   ...useThemeValues(name),
@@ -38,6 +43,7 @@ export const useValues = (name) => ({
   ...useUserValues(name),
   ...useGoogleAccessTokenValues(name),
   ...useCityValues(name),
+  ...useDataKeyValues(name),
 });
 
 export const useActions = () => ({
@@ -47,6 +53,7 @@ export const useActions = () => ({
   ...useUserActions(),
   ...useGoogleAccessTokenActions(),
   ...useCityActions(),
+  ...useDataKeyActions(),
 });
 
 export default composeProviders();

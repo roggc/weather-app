@@ -19,7 +19,7 @@ const CurrentDashboard = () => {
   return (
     <>
       <DashboardHeader />
-      <Widgets array={array} />
+      <Widgets array={array} dataKey="humidity" />
     </>
   );
 };

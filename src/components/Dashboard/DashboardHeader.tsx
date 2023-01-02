@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import styled from "styled-components";
 import { FIRST_ITEM, HERE, DEBOUNCE_DELAY_TIME } from "constants_";
-import { useValues, useActions, city, data } from "slices";
+import { useValues, useActions, city, data, dataKey } from "slices";
 import { useDebounce } from "hooks";
 
 const DashboardHeader = () => {
@@ -9,6 +9,7 @@ const DashboardHeader = () => {
   const [localCityName, setLocalCityName] = useState(cityName);
   const {
     [city]: { set: setCityName },
+    [dataKey]: { set: setDataKey },
   } = useActions();
   const {
     [HERE]: { data: hereData, isLoading, error },
@@ -21,21 +22,32 @@ const DashboardHeader = () => {
     debounced(localCityName);
   }, [localCityName, debounced]);
 
+  const dropDownOptions = ["humidity", "temp"];
+  const onDropDownChange = (e: ChangeEvent<HTMLSelectElement>) =>
+    setDataKey(e.target.value);
+
   return (
-    <Header>
-      <StyledInput
-        type="text"
-        value={localCityName}
-        onChange={(e) => setLocalCityName(e.target.value)}
-      />
-      {!isLoading && !error && !!hereData && (
-        <div>{hereData?.items?.[FIRST_ITEM]?.title}</div>
-      )}
-    </Header>
+    <>
+      <CityRow>
+        <StyledInput
+          type="text"
+          value={localCityName}
+          onChange={(e) => setLocalCityName(e.target.value)}
+        />
+        {!isLoading && !error && !!hereData && (
+          <div>{hereData?.items?.[FIRST_ITEM]?.title}</div>
+        )}
+      </CityRow>
+      <StyledSelect onChange={onDropDownChange}>
+        {dropDownOptions.map((option) => (
+          <option key={option}>{option}</option>
+        ))}
+      </StyledSelect>
+    </>
   );
 };
 
-const Header = styled.div`
+const CityRow = styled.div`
   display: flex;
   align-items: center;
 `;
@@ -45,6 +57,13 @@ const StyledInput = styled.input`
   width: 400px;
   border-radius: var(--main-border-radius);
   margin-right: 30px;
+`;
+
+const StyledSelect = styled.select`
+  margin-top: var(--general-margin);
+  height: 40px;
+  width: 100px;
+  border-radius: var(--main-border-radius);
 `;
 
 export default DashboardHeader;

@@ -129,12 +129,15 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: var(--main-padding-container);
+  position: sticky;
+  top: 0;
 `;
 
 const Page = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  overflow-y: hidden;
   color: ${({ theme }) => theme.colors.main};
   background-color: ${({ theme }) => theme.colors.secondary};
 `;
@@ -142,6 +145,7 @@ const Page = styled.div`
 const Container = styled.div`
   display: flex;
   flex-grow: 1;
+  height: 50%;
 `;
 
 const LateralMenu = styled.div`
@@ -155,6 +159,7 @@ const LateralMenu = styled.div`
 const OutletContainer = styled.div`
   flex-grow: 1;
   padding: var(--main-padding-container);
+  overflow-y: scroll;
 `;
 
 const LinkContainer = styled.div`

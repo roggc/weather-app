@@ -1,4 +1,4 @@
-import { useValues, data } from "slices";
+import { useValues, data, dataKey } from "slices";
 import { HISTORY1, HISTORY2, HISTORY3, HISTORY4, HISTORY5 } from "constants_";
 import DashboardHeader from "components/Dashboard/DashboardHeader";
 import Widgets from "components/Dashboard/Widgets";
@@ -32,6 +32,8 @@ const Dashboard = () => {
     },
   } = useValues(data);
 
+  const { value: dataKeyValue } = useValues(dataKey);
+
   const isShowHistory1Graph =
     !history1IsLoading && !history1Error && !!history1Data;
   const isShowHistory2Graph =
@@ -54,7 +56,7 @@ const Dashboard = () => {
   return (
     <>
       <DashboardHeader />
-      <Widgets array={array} />
+      <Widgets array={array} dataKey={dataKeyValue} />
     </>
   );
 };

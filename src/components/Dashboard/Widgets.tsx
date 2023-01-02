@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import BasicLineChart from "components/charts/BasicLineChart";
 
-const Widgets = ({ array }: { array: any[] }) => {
+const Widgets = ({ array, dataKey }: { array: any[]; dataKey: string }) => {
   return (
     <WidgetsContainer>
       {array.map(
@@ -10,9 +10,10 @@ const Widgets = ({ array }: { array: any[] }) => {
             <Widget key={object.id}>
               <BasicLineChart
                 data={object.data.hourly?.map((hour: any, index: number) => ({
-                  humidity: hour.humidity,
+                  [dataKey]: hour[dataKey],
                   hour: index,
                 }))}
+                dataKey={dataKey}
               />
             </Widget>
           )
@@ -26,7 +27,8 @@ const Widget = styled.div`
   background-color: ${({ theme }) => theme.colors.main};
   color: ${({ theme }) => theme.colors.secondary};
   padding: var(--main-padding-container);
-  margin: var(--general-margin);
+  margin-right: var(--general-margin);
+  margin-top: var(--general-margin);
   width: fit-content;
 `;
 
