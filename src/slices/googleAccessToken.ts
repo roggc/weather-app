@@ -1,9 +1,18 @@
-import { createSlice } from "lib/react-context-slices";
+import { createSlice, A, D } from "react-context-slices";
+
+type Setter =
+  | ((value: string | ((val: string | null) => string | null) | null) => void)
+  | undefined;
+
+type S = {
+  value: string | null;
+  setter: Setter;
+};
 
 export const name = "googleAccessToken";
-const initialState = { value: undefined, setter: undefined };
+const initialState: S = { value: null, setter: undefined };
 const SET_SETTER_ONLY_ONCE = "SET_SETTER_ONLY_ONCE";
-const reducer = (draft, { type, payload }) => {
+const reducer = (draft: D<S>, { type, payload }: A) => {
   switch (type) {
     case SET_SETTER_ONLY_ONCE:
       if (!draft.setter) {
@@ -14,13 +23,13 @@ const reducer = (draft, { type, payload }) => {
       break;
   }
 };
-export const { useValues, useActions } = createSlice(
+export const { useValues, useActions } = createSlice<S, A>(
   reducer,
   initialState,
   name,
   (useDispatch) => () => {
     const dispatch = useDispatch();
-    const setSetterOnlyOnce = (value) =>
+    const setSetterOnlyOnce = (value: Setter) =>
       dispatch({ type: SET_SETTER_ONLY_ONCE, payload: value });
     return { [name]: { setSetterOnlyOnce } };
   }

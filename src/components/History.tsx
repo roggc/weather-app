@@ -5,26 +5,31 @@ import Widgets from "components/Dashboard/Widgets";
 
 const Dashboard = () => {
   const {
+    //@ts-ignore
     [HISTORY1]: {
       data: history1Data,
       isLoading: history1IsLoading,
       error: history1Error,
     },
+    //@ts-ignore
     [HISTORY2]: {
       data: history2Data,
       isLoading: history2IsLoading,
       error: history2Error,
     },
+    //@ts-ignore
     [HISTORY3]: {
       data: history3Data,
       isLoading: history3IsLoading,
       error: history3Error,
     },
+    //@ts-ignore
     [HISTORY4]: {
       data: history4Data,
       isLoading: history4IsLoading,
       error: history4Error,
     },
+    //@ts-ignore
     [HISTORY5]: {
       data: history5Data,
       isLoading: history5IsLoading,
@@ -56,7 +61,7 @@ const Dashboard = () => {
   return (
     <>
       <DashboardHeader />
-      <Widgets array={array} dataKey={dataKeyValue} />
+      <Widgets array={array} dataKey={dataKeyValue!} />
     </>
   );
 };

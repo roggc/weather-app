@@ -18,7 +18,7 @@ import { lightTheme, darkTheme } from "other";
 
 type Route = "dashboard" | "home" | "history";
 type IsLight = {
-  isLight: boolean;
+  isLight: boolean | undefined;
 };
 
 const Layout = () => {
@@ -41,7 +41,8 @@ const Layout = () => {
   } = useActions();
 
   useEffect(() => {
-    setIsLightLocalStorage(isLight);
+    //@ts-ignore
+    setIsLightLocalStorage(isLight!);
   }, [isLight, setIsLightLocalStorage]);
 
   const onSigninWithGoogle = () => {
@@ -53,7 +54,7 @@ const Layout = () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
 
-        setter(token);
+        setter!(token ?? null);
         set(result.user);
       })
       .catch(({ message }) => console.error(message));
@@ -61,7 +62,7 @@ const Layout = () => {
 
   const onLogOut = () => {
     set(null);
-    setter(null);
+    setter!(null);
   };
 
   const dashboardLinks = [

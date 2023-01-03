@@ -13,7 +13,6 @@ const BasicLineChart = <T,>({
   width = 300,
   height = 200,
 }: Props<T>) => {
-  console.log("key", dataKey);
   return (
     <LineChart width={width} height={height} data={data}>
       <Line dataKey={dataKey} type="monotone" />

@@ -12,6 +12,7 @@ export const useFetch = (
 
   useEffect(() => {
     if (condition) {
+      console.log("fetching");
       fetch(`${protocol}${apiUrl}${path}`)
         .then((resp) => resp.json())
         .then((data) => setData(data))

@@ -12,6 +12,7 @@ const DashboardHeader = () => {
     [dataKey]: { set: setDataKey },
   } = useActions();
   const {
+    //@ts-ignore
     [HERE]: { data: hereData, isLoading, error },
   } = useValues(data);
   const debounce = useDebounce();

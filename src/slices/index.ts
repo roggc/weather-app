@@ -1,4 +1,4 @@
-import { composeProviders } from "lib/react-context-slices";
+import { composeProviders } from "react-context-slices";
 import {
   useValues as useThemeValues,
   useActions as useThemeActions,
@@ -36,7 +36,7 @@ export { name as googleAccessToken } from "slices/googleAccessToken";
 export { name as city } from "slices/city";
 export { name as dataKey } from "slices/dataKey";
 
-export const useValues = (name) => ({
+export const useValues = (name: string) => ({
   ...useThemeValues(name),
   ...useDataValues(name),
   ...useFirebaseValues(name),

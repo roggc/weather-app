@@ -5,6 +5,7 @@ import Widgets from "components/Dashboard/Widgets";
 
 const CurrentDashboard = () => {
   const {
+    //@ts-ignore
     [CURRENT]: { data: currentData, isLoading, error },
   } = useValues(data);
 

@@ -13,7 +13,7 @@ import {
 } from "slices";
 import { useFetch, useLocalStorage } from "hooks";
 import {
-  MY_API_URL,
+  MY_API_URL_DEV,
   GOOGLE_API,
   HISTORY1,
   HISTORY2,
@@ -49,9 +49,9 @@ const App = () => {
   const googleAPIPath = `/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`;
   const herePath = `/here-coordinates?q=${cityName}`;
 
-  const firebaseState = useFetch(MY_API_URL, firebasePath);
+  const firebaseState = useFetch(MY_API_URL_DEV, firebasePath, true, "http://");
   const googleAPIState = useFetch(GOOGLE_API, googleAPIPath, !!accessToken);
-  const hereState = useFetch(MY_API_URL, herePath);
+  const hereState = useFetch(MY_API_URL_DEV, herePath, true, "http://");
 
   useEffect(() => {
     const isHereReady_ =
@@ -77,15 +77,40 @@ const App = () => {
     }
   }, [hereState.isLoading, hereState.error, hereState.data, cityName]);
 
-  const historyState1 = useFetch(MY_API_URL, historyPath1, isHereReady);
+  const historyState1 = useFetch(
+    MY_API_URL_DEV,
+    historyPath1,
+    isHereReady,
+    "http://"
+  );
 
-  const historyState2 = useFetch(MY_API_URL, historyPath2, isHereReady);
+  const historyState2 = useFetch(
+    MY_API_URL_DEV,
+    historyPath2,
+    isHereReady,
+    "http://"
+  );
 
-  const historyState3 = useFetch(MY_API_URL, historyPath3, isHereReady);
+  const historyState3 = useFetch(
+    MY_API_URL_DEV,
+    historyPath3,
+    isHereReady,
+    "http://"
+  );
 
-  const historyState4 = useFetch(MY_API_URL, historyPath4, isHereReady);
+  const historyState4 = useFetch(
+    MY_API_URL_DEV,
+    historyPath4,
+    isHereReady,
+    "http://"
+  );
 
-  const historyState5 = useFetch(MY_API_URL, historyPath5, isHereReady);
+  const historyState5 = useFetch(
+    MY_API_URL_DEV,
+    historyPath5,
+    isHereReady,
+    "http://"
+  );
 
   const { isLight } = useValues(theme);
 

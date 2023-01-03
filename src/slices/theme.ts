@@ -1,9 +1,11 @@
-import { createSlice } from "lib/react-context-slices";
+import { createSlice, D, A } from "react-context-slices";
+
+type S = { isLight: boolean };
 
 export const name = "theme";
-const initialState = { isLight: true };
+const initialState: S = { isLight: true };
 const TOGGLE = "TOGGLE";
-const reducer = (draft, { type }) => {
+const reducer = (draft: D<S>, { type }: A) => {
   switch (type) {
     case TOGGLE:
       draft.isLight = !draft.isLight;
@@ -12,7 +14,7 @@ const reducer = (draft, { type }) => {
       break;
   }
 };
-export const { useValues, useActions } = createSlice(
+export const { useValues, useActions } = createSlice<S, A>(
   reducer,
   initialState,
   name,

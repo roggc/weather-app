@@ -1,9 +1,13 @@
-import { createSlice } from "lib/react-context-slices";
+import { createSlice, A, D } from "react-context-slices";
+
+type S = {
+  app: any;
+};
 
 export const name = "firebase";
-const initialState = { app: null };
+const initialState: S = { app: null };
 const SET_ONCE = "SET_ONCE";
-const reducer = (draft, { type, payload }) => {
+const reducer = (draft: D<S>, { type, payload }: A) => {
   switch (type) {
     case SET_ONCE:
       if (!draft.app) {
@@ -14,13 +18,14 @@ const reducer = (draft, { type, payload }) => {
       break;
   }
 };
-export const { useValues, useActions } = createSlice(
+export const { useValues, useActions } = createSlice<S, A>(
   reducer,
   initialState,
   name,
   (useDispatch) => () => {
     const dispatch = useDispatch();
-    const setOnce = (value) => dispatch({ type: SET_ONCE, payload: value });
+    const setOnce = (value: any) =>
+      dispatch({ type: SET_ONCE, payload: value });
     return { [name]: { setOnce } };
   }
 );
