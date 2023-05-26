@@ -1,20 +1,15 @@
 import { useEffect, useState, ChangeEvent } from "react";
 import styled from "styled-components";
-import { FIRST_ITEM, HERE, DEBOUNCE_DELAY_TIME } from "constants_";
-import { useValues, useActions, city, data, dataKey } from "slices";
+import { FIRST_ITEM, DEBOUNCE_DELAY_TIME } from "constants_";
+import { useSlice } from "slices";
 import { useDebounce } from "hooks";
 
 const DashboardHeader = () => {
-  const { name: cityName } = useValues(city);
+  const [cityName, setCityName] = useSlice("city");
   const [localCityName, setLocalCityName] = useState(cityName);
-  const {
-    [city]: { set: setCityName },
-    [dataKey]: { set: setDataKey },
-  } = useActions();
-  const {
-    //@ts-ignore
-    [HERE]: { data: hereData, isLoading, error },
-  } = useValues(data);
+  const [, setDataKey] = useSlice("dataKey");
+
+  const [{ data: hereData, isLoading, error }] = useSlice("hereData");
   const debounce = useDebounce();
 
   const debounced = debounce((name) => setCityName(name), DEBOUNCE_DELAY_TIME);

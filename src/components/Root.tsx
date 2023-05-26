@@ -1,10 +1,10 @@
-import AppProvider from "slices";
+import { Provider } from "slices";
 import App from "components/App";
 
 const Root = () => (
-  <AppProvider>
+  <Provider>
     <App />
-  </AppProvider>
+  </Provider>
 );
 
 export default Root;

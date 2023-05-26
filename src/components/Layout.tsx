@@ -2,14 +2,7 @@ import { useEffect } from "react";
 import { PropsWithChildren } from "react";
 import { Link, Outlet } from "@tanstack/react-router";
 import styled from "styled-components";
-import {
-  useValues,
-  useActions,
-  theme,
-  firebase,
-  user,
-  googleAccessToken,
-} from "slices";
+import { useSlice } from "slices";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useMediaQuery } from "react-responsive";
 import { RESPONSIVE_BREAKPOINT } from "constants_";
@@ -23,22 +16,15 @@ type IsLight = {
 
 const Layout = () => {
   const [route, setRoute] = useLocalStorage<Route>("route", "home");
-  const { isLight } = useValues(theme);
+  const [isLight, setIsLight] = useSlice("theme");
   const themeValue = isLight ? lightTheme : darkTheme;
-  const [, setIsLightLocalStorage] = useLocalStorage<IsLight>("isLight", {
-    isLight,
-  });
+  const [, setIsLightLocalStorage] = useLocalStorage<IsLight>("theme", isLight);
 
-  const { setter } = useValues(googleAccessToken);
+  const [setter] = useSlice("googleAccessToken");
 
-  const { app: firebaseApp } = useValues(firebase);
+  const [firebaseApp] = useSlice("firebase");
 
-  const { user: userLoggedIn } = useValues(user);
-
-  const {
-    [theme]: { toggle },
-    [user]: { set },
-  } = useActions();
+  const [userLoggedIn, set] = useSlice("user");
 
   useEffect(() => {
     //@ts-ignore
@@ -94,7 +80,9 @@ const Layout = () => {
           )}
         </HeaderLeft>
         <HeaderRight>
-          <HeaderRightButton onClick={toggle}>switch theme</HeaderRightButton>
+          <HeaderRightButton onClick={() => setIsLight((iL: boolean) => !iL)}>
+            switch theme
+          </HeaderRightButton>
           {!!userLoggedIn ? (
             <HeaderRightButton onClick={onLogOut}>logout</HeaderRightButton>
           ) : (

@@ -1,29 +1,9 @@
 import { useEffect, useState } from "react";
 import { RouterProvider } from "@tanstack/react-router";
 import { ThemeProvider } from "styled-components";
-import {
-  useValues,
-  useActions,
-  theme,
-  data,
-  firebase,
-  googleAccessToken,
-  user,
-  city,
-} from "slices";
+import { useSlice } from "slices";
 import { useFetch, useLocalStorage } from "hooks";
-import {
-  MY_API_URL_DEV,
-  GOOGLE_API,
-  HISTORY1,
-  HISTORY2,
-  HISTORY3,
-  HISTORY4,
-  HISTORY5,
-  FIREBASE,
-  HERE,
-  FIRST_ITEM,
-} from "constants_";
+import { MY_API_URL_DEV, GOOGLE_API, FIRST_ITEM } from "constants_";
 import { initializeApp } from "firebase/app";
 import { getRouter } from "other";
 import { getHistoryPath } from "utils";
@@ -35,7 +15,7 @@ const App = () => {
     null
   );
 
-  const { name: cityName } = useValues(city);
+  const [cityName] = useSlice("city");
 
   const [historyPath1, setHistoryPath1] = useState("");
   const [historyPath2, setHistoryPath2] = useState("");
@@ -112,50 +92,47 @@ const App = () => {
     "http://"
   );
 
-  const { isLight } = useValues(theme);
-
-  const { app: firebaseApp } = useValues(firebase);
-
-  const { user: userData } = useValues(user);
-
-  const { setter } = useValues(googleAccessToken);
-
-  const {
-    [data]: { set },
-    [firebase]: { setOnce },
-    [googleAccessToken]: { setSetterOnlyOnce },
-    [user]: { set: setUser },
-  } = useActions();
+  const [isLight] = useSlice("theme");
+  const [firebaseApp, setFirebaseApp] = useSlice("firebase");
+  const [userData, setUser] = useSlice("user");
+  const [setter, setSetter] = useSlice("googleAccessToken");
+  const [, setHistory1Data] = useSlice("history1Data");
+  const [, setHistory2Data] = useSlice("history2Data");
+  const [, setHistory3Data] = useSlice("history3Data");
+  const [, setHistory4Data] = useSlice("history4Data");
+  const [, setHistory5Data] = useSlice("history5Data");
+  const [, setFirebaseData] = useSlice("firebaseData");
+  const [, setHereData] = useSlice("hereData");
 
   const [router, setRouter] = useState(getRouter(!!userData));
 
   useEffect(() => {
-    set(HISTORY1, historyState1);
-  }, [historyState1, set]);
+    setHistory1Data(historyState1);
+  }, [historyState1, setHistory1Data]);
 
   useEffect(() => {
-    set(HISTORY2, historyState2);
-  }, [historyState2, set]);
+    setHistory2Data(historyState2);
+  }, [historyState2, setHistory2Data]);
 
   useEffect(() => {
-    set(HISTORY3, historyState3);
-  }, [historyState3, set]);
+    setHistory3Data(historyState3);
+  }, [historyState3, setHistory3Data]);
 
   useEffect(() => {
-    set(HISTORY4, historyState4);
-  }, [historyState4, set]);
+    setHistory4Data(historyState4);
+  }, [historyState4, setHistory4Data]);
 
   useEffect(() => {
-    set(HISTORY5, historyState5);
-  }, [historyState5, set]);
+    setHistory5Data(historyState5);
+  }, [historyState5, setHistory5Data]);
 
   useEffect(() => {
-    set(FIREBASE, firebaseState);
-  }, [firebaseState, set]);
+    setFirebaseData(firebaseState);
+  }, [firebaseState, setFirebaseData]);
 
   useEffect(() => {
-    set(HERE, hereState);
-  }, [hereState, set]);
+    setHereData(hereState);
+  }, [hereState, setHereData]);
 
   useEffect(() => {
     if (
@@ -165,21 +142,21 @@ const App = () => {
       !firebaseApp
     ) {
       const app = initializeApp(firebaseState.data);
-      setOnce(app);
+      !firebaseApp && setFirebaseApp(app);
     }
   }, [
     firebaseState.isLoading,
     firebaseState.error,
     firebaseState.data,
-    setOnce,
+    setFirebaseApp,
     firebaseApp,
   ]);
 
   useEffect(() => {
     if (setAccessToken && !setter) {
-      setSetterOnlyOnce(setAccessToken);
+      !setter && setSetter((s: () => void) => (!s ? setAccessToken : s));
     }
-  }, [setAccessToken, setSetterOnlyOnce, setter]);
+  }, [setAccessToken, setSetter, setter]);
 
   useEffect(() => {
     if (

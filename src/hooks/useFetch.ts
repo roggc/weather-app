@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 export const useFetch = (
   apiUrl: string,
@@ -24,5 +24,5 @@ export const useFetch = (
     }
   }, [apiUrl, path, condition, protocol]);
 
-  return { data, error, isLoading };
+  return useMemo(() => ({ data, error, isLoading }), [data, error, isLoading]);
 };

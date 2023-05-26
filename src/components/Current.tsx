@@ -1,21 +1,13 @@
-import { useValues, data } from "slices";
-import { CURRENT } from "constants_";
+import { useSlice } from "slices";
 import DashboardHeader from "components/Dashboard/DashboardHeader";
 import Widgets from "components/Dashboard/Widgets";
 
 const CurrentDashboard = () => {
-  const {
-    //@ts-ignore
-    [CURRENT]: { data: currentData, isLoading, error },
-  } = useValues(data);
+  const [{ data: currentData, isLoading, error }] = useSlice("currentData");
 
   const isShowCurrentGraph = !isLoading && !error && !!currentData;
 
   const array = [{ data: currentData, condition: isShowCurrentGraph, id: 1 }];
-
-  if (isShowCurrentGraph) {
-    console.log("currentData", currentData);
-  }
 
   return (
     <>

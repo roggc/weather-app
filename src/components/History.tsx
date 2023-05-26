@@ -1,43 +1,25 @@
-import { useValues, data, dataKey } from "slices";
-import { HISTORY1, HISTORY2, HISTORY3, HISTORY4, HISTORY5 } from "constants_";
+import { useSlice } from "slices";
 import DashboardHeader from "components/Dashboard/DashboardHeader";
 import Widgets from "components/Dashboard/Widgets";
 
 const Dashboard = () => {
-  const {
-    //@ts-ignore
-    [HISTORY1]: {
-      data: history1Data,
-      isLoading: history1IsLoading,
-      error: history1Error,
-    },
-    //@ts-ignore
-    [HISTORY2]: {
-      data: history2Data,
-      isLoading: history2IsLoading,
-      error: history2Error,
-    },
-    //@ts-ignore
-    [HISTORY3]: {
-      data: history3Data,
-      isLoading: history3IsLoading,
-      error: history3Error,
-    },
-    //@ts-ignore
-    [HISTORY4]: {
-      data: history4Data,
-      isLoading: history4IsLoading,
-      error: history4Error,
-    },
-    //@ts-ignore
-    [HISTORY5]: {
-      data: history5Data,
-      isLoading: history5IsLoading,
-      error: history5Error,
-    },
-  } = useValues(data);
+  const [
+    { data: history1Data, isLoading: history1IsLoading, error: history1Error },
+  ] = useSlice("history1Data");
+  const [
+    { data: history2Data, isLoading: history2IsLoading, error: history2Error },
+  ] = useSlice("history2Data");
+  const [
+    { data: history3Data, isLoading: history3IsLoading, error: history3Error },
+  ] = useSlice("history3Data");
+  const [
+    { data: history4Data, isLoading: history4IsLoading, error: history4Error },
+  ] = useSlice("history4Data");
+  const [
+    { data: history5Data, isLoading: history5IsLoading, error: history5Error },
+  ] = useSlice("history5Data");
 
-  const { value: dataKeyValue } = useValues(dataKey);
+  const [dataKey] = useSlice("dataKey");
 
   const isShowHistory1Graph =
     !history1IsLoading && !history1Error && !!history1Data;
@@ -61,7 +43,7 @@ const Dashboard = () => {
   return (
     <>
       <DashboardHeader />
-      <Widgets array={array} dataKey={dataKeyValue!} />
+      <Widgets array={array} dataKey={dataKey!} />
     </>
   );
 };
