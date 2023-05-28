@@ -1,25 +1,26 @@
 import { useSlice } from "slices";
 import DashboardHeader from "components/Dashboard/DashboardHeader";
 import Widgets from "components/Dashboard/Widgets";
+import { Data } from "types";
 
 const Dashboard = () => {
   const [
     { data: history1Data, isLoading: history1IsLoading, error: history1Error },
-  ] = useSlice("history1Data");
+  ] = useSlice<Data>("history1Data");
   const [
     { data: history2Data, isLoading: history2IsLoading, error: history2Error },
-  ] = useSlice("history2Data");
+  ] = useSlice<Data>("history2Data");
   const [
     { data: history3Data, isLoading: history3IsLoading, error: history3Error },
-  ] = useSlice("history3Data");
+  ] = useSlice<Data>("history3Data");
   const [
     { data: history4Data, isLoading: history4IsLoading, error: history4Error },
-  ] = useSlice("history4Data");
+  ] = useSlice<Data>("history4Data");
   const [
     { data: history5Data, isLoading: history5IsLoading, error: history5Error },
-  ] = useSlice("history5Data");
+  ] = useSlice<Data>("history5Data");
 
-  const [dataKey] = useSlice("dataKey");
+  const [dataKey] = useSlice<string>("dataKey");
 
   const isShowHistory1Graph =
     !history1IsLoading && !history1Error && !!history1Data;

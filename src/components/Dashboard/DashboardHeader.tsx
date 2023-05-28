@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { FIRST_ITEM, DEBOUNCE_DELAY_TIME } from "constants_";
 import { useSlice } from "slices";
 import { useDebounce } from "hooks";
+import { Data } from "types";
 
 const DashboardHeader = () => {
-  const [cityName, setCityName] = useSlice("city");
-  const [localCityName, setLocalCityName] = useState(cityName);
+  const [cityName, setCityName] = useSlice<string>("city");
+  const [localCityName, setLocalCityName] = useState<string>(cityName);
   const [, setDataKey] = useSlice("dataKey");
 
-  const [{ data: hereData, isLoading, error }] = useSlice("hereData");
+  const [{ data: hereData, isLoading, error }] = useSlice<Data>("hereData");
   const debounce = useDebounce();
 
   const debounced = debounce((name) => setCityName(name), DEBOUNCE_DELAY_TIME);

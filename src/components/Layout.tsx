@@ -10,17 +10,14 @@ import { useLocalStorage } from "hooks";
 import { lightTheme, darkTheme } from "other";
 
 type Route = "dashboard" | "home" | "history";
-type IsLight = {
-  isLight: boolean | undefined;
-};
 
 const Layout = () => {
   const [route, setRoute] = useLocalStorage<Route>("route", "home");
-  const [isLight, setIsLight] = useSlice("theme");
+  const [isLight, setIsLight] = useSlice<boolean>("theme");
   const themeValue = isLight ? lightTheme : darkTheme;
-  const [, setIsLightLocalStorage] = useLocalStorage<IsLight>("theme", isLight);
+  const [, setIsLightLocalStorage] = useLocalStorage<boolean>("theme", isLight);
 
-  const [setter] = useSlice("googleAccessToken");
+  const [setter] = useSlice<(v: string | null) => void>("googleAccessToken");
 
   const [firebaseApp] = useSlice("firebase");
 
